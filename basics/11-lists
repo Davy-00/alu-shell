@@ -1,3 +1,2 @@
 #!/bin/bash
-# List all files in the current directory, parent directory, and /boot directory in long format
 ls -la . .. /boot
