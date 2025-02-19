@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Analyzes Apache log file to display visitor stats by IP and HTTP status
 
-awk '{print $1, $9}' apache-access.log | sort | uniq -c | sort -rn | awk '{print $1, $2, $3}'
+awk '{print $1, $9}' apache-access.log | sort | uniq -c | sort -rn | awk '{printf "%d %s %s ", $1, $2, $3}'
 
