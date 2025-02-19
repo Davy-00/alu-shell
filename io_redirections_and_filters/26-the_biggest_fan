@@ -1,2 +1,2 @@
 #!/bin/bash
-while read -r host _; do ((count["$host"]++)); done; for h in "${!count[@]}"; do echo -e "$h\t${count[$h]}"; done | sort -k2,2nr | head -n 11
+cut -c 1 | paste -s -d ''
