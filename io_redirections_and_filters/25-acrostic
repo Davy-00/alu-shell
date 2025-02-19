@@ -1,5 +1,2 @@
 #!/bin/bash
-while read line; do
-    echo -n "${line:0:1}"
-done
-echo
+read word && echo "${word:0:2}"
