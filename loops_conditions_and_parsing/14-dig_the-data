@@ -1,5 +1,26 @@
 #!/usr/bin/env bash
-# Groups visitors by IP and HTTP status code from Apache log
+# Script to process Apache-style log files and generate error reports
 
-awk '{ print $1 " " $9}' "$1" | sort | uniq -c | sort -rn | awk '{ print "    " $1 " " $2 " " $3 }'
+while read -r line; do
+    # Skip lines that don't match expected format
+    if ! [[ "$line" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+.* ]]; then
+        continue
+    fi
+
+    # Extract IP and status code
+    ip=$(echo "$line" | awk '{print $1}')
+    status=$(echo "$line" | awk '{print $9}')
+
+    # Count occurrences
+    if [[ -n "$ip" && -n "$status" ]]; then
+        if [[ "$status" =~ ^[0-9]+$ ]]; then
+            counts["$ip $status"]=$((${counts["$ip $status"]} + 1))
+        fi
+    fi
+done < "$1"
+
+# Print results sorted by count in descending order
+for key in "${!counts[@]}"; do
+    echo "${counts[$key]} $key"
+done | sort -rn
 
