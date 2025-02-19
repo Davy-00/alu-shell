@@ -1,2 +1,2 @@
 #!/bin/bash
-read word && echo "${word:0:2}"
+cut -c 1 | paste -s -d ''
