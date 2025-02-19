@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
-# Script to process Apache log file and display visitor stats by IP and HTTP status
+# Analyzes Apache log file to display visitor stats by IP and HTTP status
 
-awk '{ 
-    # Create a key combining IP and HTTP status
-    key = $1 " " $9
-    
-    # Increment counter for this combination
-    count[key]++
-}
-
-END {
-    # Process all unique combinations
-    for (combo in count) {
-        # Print count and combination
-        printf "%s %s\n", count[combo], combo
-    }
-}' apache-access.log | sort -rn
+awk '{print $1, $9}' apache-access.log | sort | uniq -c | sort -rn | awk '{print $1, $2, $3}'
 
